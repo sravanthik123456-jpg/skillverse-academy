@@ -14,13 +14,200 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      courses: {
+        Row: {
+          category: string
+          cover_key: string
+          created_at: string
+          description: string
+          duration_minutes: number
+          id: string
+          lessons: Json
+          level: string
+          published: boolean
+          slug: string
+          title: string
+          updated_at: string
+          xp_reward: number
+        }
+        Insert: {
+          category: string
+          cover_key?: string
+          created_at?: string
+          description: string
+          duration_minutes?: number
+          id?: string
+          lessons?: Json
+          level?: string
+          published?: boolean
+          slug: string
+          title: string
+          updated_at?: string
+          xp_reward?: number
+        }
+        Update: {
+          category?: string
+          cover_key?: string
+          created_at?: string
+          description?: string
+          duration_minutes?: number
+          id?: string
+          lessons?: Json
+          level?: string
+          published?: boolean
+          slug?: string
+          title?: string
+          updated_at?: string
+          xp_reward?: number
+        }
+        Relationships: []
+      }
+      discussions: {
+        Row: {
+          body: string
+          created_at: string
+          display_name: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          display_name: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "discussions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      learning_progress: {
+        Row: {
+          completed_at: string | null
+          completed_lessons: string[]
+          course_slug: string
+          id: string
+          quiz_score: number | null
+          updated_at: string
+          user_id: string
+          xp_earned: number
+        }
+        Insert: {
+          completed_at?: string | null
+          completed_lessons?: string[]
+          course_slug: string
+          id?: string
+          quiz_score?: number | null
+          updated_at?: string
+          user_id: string
+          xp_earned?: number
+        }
+        Update: {
+          completed_at?: string | null
+          completed_lessons?: string[]
+          course_slug?: string
+          id?: string
+          quiz_score?: number | null
+          updated_at?: string
+          user_id?: string
+          xp_earned?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_progress_course_slug_fkey"
+            columns: ["course_slug"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "learning_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string
+          interests: string[]
+          preferred_language: string
+          share_progress: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string
+          interests?: string[]
+          preferred_language?: string
+          share_progress?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string
+          interests?: string[]
+          preferred_language?: string
+          share_progress?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_leaderboard: {
+        Args: never
+        Returns: {
+          display_name: string
+          level: string
+          rank: number
+          xp: number
+        }[]
+      }
+      has_role: { Args: { _role: string; _user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture
+- Keep SkillVerse features in reusable domain components with distinct top-level TanStack routes, and keep account-owned records in Lovable Cloud with row-level access controls because progress and profiles sync across devices.
